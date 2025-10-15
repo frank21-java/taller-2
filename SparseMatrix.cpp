@@ -49,18 +49,27 @@ void SparseMatrix::printStoredValues(){
     }
 }
 
-void SparseMatrix::remove(int fila,int columna){
-    if(start==nullptr){return;}
-    Node* actual=start;
+int SparseMatrix::remover(int fila,int columna){
+    if(start==nullptr){
+        return 0;
+        
+    }
+    Node* actual = start;
     Node* anterior = nullptr;
     while (actual != nullptr && (actual->fila != fila || actual->columna != columna)) {
         anterior = actual;
         actual = actual->next;
     }
-    if(actual!=nullptr){
-        anterior->next=actual->next;
-        delete actual;
+    if(actual ==nullptr){
+        return 0;
+    } 
+    if(anterior == nullptr){
+        start = actual->next;
+    } else {
+        anterior->next = actual->next;
     }
+    delete actual;
+    return 1;
 }
 
 int SparseMatrix::density(){
