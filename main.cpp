@@ -2,6 +2,8 @@
 #include "SparseMatrix.h"
 using namespace std;
 
+SparseMatrix Matrix;
+
 void menuPrincipal();
 
 void AgregarDato();
@@ -27,22 +29,22 @@ int main()
         }
         switch(opcion){
             case 1 :
-                void AgregarDato();
+                AgregarDato();
                 break;
             case 2 :
-                void ObteneDatoCord();
+                ObteneDatoCord();
                 break;
             case 3 :
-                void RemoverDato();
+                RemoverDato();
                 break;
             case 4 :
-                void MostrarDatos();
+                MostrarDatos();
                 break;
             case 5 :
-                void DensidadMatriz();
+                DensidadMatriz();
                 break;
             case 6 :
-                void MultiplicarMatriz();
+                MultiplicarMatriz();
                 break;
             case 7 :
                 cout<<"hasta luego"<<endl;
@@ -50,7 +52,7 @@ int main()
             default:
                 cout << "Esa opcion es invalida"<< endl;
         }
-    }while(opcion !=7);
+    } while(opcion !=7);
     return 0;
 }
 
@@ -65,9 +67,111 @@ void menuPrincipal(){
     cout << "7: Salir"<< endl;
     cout << "Seleccione: ";
 }
-void AgregarDato(){}
-void ObteneDatoCord(){}
-void RemoverDato(){}
+void AgregarDato(){
+    int X;
+    int Y;
+    int value;
+    string input;
+    cout << "----------------------" << endl;
+    cout << "Ingrese Coredenada X" << endl;
+    getline(cin, input);
+    try {
+        X = stoi(input);
+    } catch (...){
+        X = 0;
+    }
+    if(X == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    cout << "Ingrese Cordenada Y" << endl;
+    getline(cin, input);
+    try {
+        Y = stoi(input);
+    } catch (...){
+        Y = 0;
+    }
+    if(Y == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    cout << "Ingrese Valor a insertar: " << endl; 
+    getline(cin, input);
+    try {
+        value = stoi(input);
+    } catch (...){
+        value = 0;
+    }
+    if(value == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    
+    Matrix.add(X,Y,value);
+}
+void ObteneDatoCord(){
+    int X;
+    int Y;
+    string input;
+    cout << "----------------------" << endl;
+    cout << "Ingrese Coredenada X" << endl;
+    getline(cin, input);
+    try {
+        X = stoi(input);
+    } catch (...){
+        X = 0;
+    }
+    if(X == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    cout << "Ingrese Cordenada Y" << endl;
+    getline(cin, input);
+    try {
+        Y = stoi(input);
+    } catch (...){
+        Y = 0;
+    }
+    if(Y == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    cout<< "valor: " << Matrix.get(X,Y) << endl;
+}
+void RemoverDato(){
+    int X;
+    int Y;
+    string input;
+    cout << "----------------------" << endl;
+    cout << "Ingrese Coredenada X" << endl;
+    getline(cin, input);
+    try {
+        X = stoi(input);
+    } catch (...){
+        X = 0;
+    }
+    if(X == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    cout << "Ingrese Cordenada Y" << endl;
+    getline(cin, input);
+    try {
+        Y = stoi(input);
+    } catch (...){
+        Y = 0;
+    }
+    if(Y == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    int a = Matrix.remover(X,Y);
+    if (a == 1){
+        cout << "Se a eliminado el dato de la cordenada con exito"<<endl;
+    } else{
+        cout << "No existe dato en esa cordenada"<<endl;
+    }
+}
 void MostrarDatos(){}
 void DensidadMatriz(){}
 void MultiplicarMatriz(){}
