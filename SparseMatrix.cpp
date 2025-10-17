@@ -75,19 +75,52 @@ int SparseMatrix::remover(int fila,int columna){
 int SparseMatrix::density(){
     if(start==nullptr){return 0;}
     int cantidad=0;
-    int maxFila=0;
-    int maxColumna=0;
+    int filas=obtenerFilas();
+    int columnas=obtenerColumnas();
     Node* actual=start;
     while(actual!=nullptr){
         cantidad++;
-        maxFila=max(maxFila, actual->fila);
-        maxColumna=max(maxColumna,actual->columna);
         actual=actual->next;
     }
-    int total=maxFila*maxColumna;
+    int total=filas*columnas;
     return cantidad/total;
 }
 
+int SparseMatrix::obtenerFilas(){
+    int filas=0;
+    Node* actual=start;
+    while(actual!=nullptr){
+        filas=max(filas,actual->fila);
+        actual=actual->next;
+    }
+    return filas+1;
+}
+int SparseMatrix::obtenerColumnas(){
+    int columnas=0;
+    Node* actual=start;
+    while(actual!=nullptr){
+        columnas=max(columnas,actual->columna);
+        actual=actual->next;
+    }
+    return columnas+1;
+}
+
 SparseMatrix* SparseMatrix::multiply(SparseMatrix* second){
+    if(obtenerColumnas()==second->obtenerFilas()){
+        SparseMatrix* matriz=new SparseMatrix();
+        Node* actual=start;
+        while(actual!=nullptr){
+            Node* multi=second->start;
+            while(multi!=nullptr){
+                if(actual->fila==multi->columna){
+                    int agregar=get(actual->fila,actual->columna) * second->get(multi->fila,multi->columna);
+                    matriz->add(actual->fila,multi->columna,agregar);
+                }
+                multi=multi->next;
+            }
+            actual=actual->next;
+        }
+        return matriz;
+    }
     return nullptr;
 }
