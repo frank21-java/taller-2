@@ -13,4 +13,6 @@ class SparseMatrix {
         SparseMatrix* multiply(SparseMatrix* second);
         ~SparseMatrix();
 
+    int obtenerFilas();
+    int obtenerColumnas();
 };
