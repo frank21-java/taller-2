@@ -68,6 +68,7 @@ void menuPrincipal(){
     cout << "Seleccione: ";
 }
 void AgregarDato(){
+    clock_t inicio=clock();
     int X;
     int Y;
     int value;
@@ -108,8 +109,12 @@ void AgregarDato(){
     }
     
     Matrix.add(X,Y,value);
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
 void ObteneDatoCord(){
+    clock_t inicio=clock();
     int X;
     int Y;
     string input;
@@ -137,8 +142,12 @@ void ObteneDatoCord(){
         return;
     }
     cout<< "valor: " << Matrix.get(X,Y) << endl;
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
 void RemoverDato(){
+    clock_t inicio=clock();
     int X;
     int Y;
     string input;
@@ -171,7 +180,34 @@ void RemoverDato(){
     } else{
         cout << "No existe dato en esa cordenada"<<endl;
     }
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
-void MostrarDatos(){}
-void DensidadMatriz(){}
-void MultiplicarMatriz(){}
+void MostrarDatos(){
+    clock_t inicio=clock();
+    
+    //codigo aqui
+    
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
+}
+void DensidadMatriz(){
+        clock_t inicio=clock();
+    
+    //codigo aqui
+    
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
+}
+void MultiplicarMatriz(){
+        clock_t inicio=clock();
+    
+    //codigo aqui
+    
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
+}
