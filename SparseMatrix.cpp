@@ -94,7 +94,7 @@ int SparseMatrix::obtenerFilas(){
         filas=max(filas,actual->fila);
         actual=actual->next;
     }
-    return filas+1;
+    return filas;
 }
 int SparseMatrix::obtenerColumnas(){
     int columnas=0;
@@ -103,7 +103,7 @@ int SparseMatrix::obtenerColumnas(){
         columnas=max(columnas,actual->columna);
         actual=actual->next;
     }
-    return columnas+1;
+    return columnas;
 
 }
 

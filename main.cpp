@@ -186,24 +186,20 @@ void RemoverDato(){
 }
 void MostrarDatos(){
     clock_t inicio=clock();
-    
-    //codigo aqui
-    
+    cout<< "Datos en la matriz:"<<endl;
+    Matrix.printStoredValues();
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
 void DensidadMatriz(){
-        clock_t inicio=clock();
-    
-    //codigo aqui
-    
+    clock_t inicio=clock();
+    std::cout<< "Dencidad de la matriz: "<< Matrix.density()<<"%"<<std::endl;
     clock_t fin=clock();
-    std::cout<< "Dencidad de la matriz: "<< Matrix.density()<<std::endl;
 }
 
 void MultiplicarMatriz(){
-        clock_t inicio=clock();
+    clock_t inicio=clock();
     
     //codigo aqui
     
