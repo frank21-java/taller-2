@@ -83,7 +83,27 @@ int SparseMatrix::density(){
         actual=actual->next;
     }
     int total=filas*columnas;
-    return cantidad/total;
+    double resultado = (double)cantidad/total;
+    return resultado*100;
+}
+
+int SparseMatrix::obtenerFilas(){
+    int filas=0;
+    Node* actual=start;
+    while(actual!=nullptr){
+        filas=max(filas,actual->fila);
+        actual=actual->next;
+    }
+    return filas+1;
+}
+int SparseMatrix::obtenerColumnas(){
+    int columnas=0;
+    Node* actual=start;
+    while(actual!=nullptr){
+        columnas=max(columnas,actual->columna);
+        actual=actual->next;
+    }
+    return columnas+1;
 }
 
 int SparseMatrix::obtenerFilas(){
