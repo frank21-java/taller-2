@@ -1,5 +1,6 @@
 #include "SparseMatrix.h"
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 SparseMatrix::SparseMatrix(){
@@ -125,4 +126,29 @@ SparseMatrix* SparseMatrix::multiply(SparseMatrix* second){
         return matriz;
     }
     return nullptr;
+}
+
+bool SparseMatrix::existe(int fila,int columna){
+    Node* actual=start;
+    while(actual!=nullptr){
+        if (actual->fila == fila && actual->columna == columna) {
+            return true;
+        }
+        actual=actual->next;
+    }
+    return false;
+}
+
+void SparseMatrix::generarRandom(int cant){
+    int listos=0;
+    int fila;
+    int columna;
+    while(listos<cant){
+        fila=rand();
+        columna=rand();
+        if(existe(fila,columna)==false){
+            add(fila,columna,rand());
+            listos++;
+        }
+    }
 }

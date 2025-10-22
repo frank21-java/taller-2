@@ -12,6 +12,7 @@ void RemoverDato();
 void MostrarDatos();
 void DensidadMatriz();
 void MultiplicarMatriz();
+void randomizar();
 
 
 int main()
@@ -49,6 +50,9 @@ int main()
             case 7 :
                 cout<<"hasta luego"<<endl;
                 break;
+            case 8:
+                randomizar();
+                break;
             default:
                 cout << "Esa opcion es invalida"<< endl;
         }
@@ -65,6 +69,7 @@ void menuPrincipal(){
     cout << "5: Densidad de la matriz" << endl;
     cout << "6: Multiplicar matriz"<< endl;
     cout << "7: Salir"<< endl;
+    cout<<"8: Generar cantidad de aleatorios"<<endl;
     cout << "Seleccione: ";
 }
 void AgregarDato(){
@@ -196,6 +201,8 @@ void DensidadMatriz(){
     clock_t inicio=clock();
     std::cout<< "Dencidad de la matriz: "<< Matrix.density()<<"%"<<std::endl;
     clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
 
 void MultiplicarMatriz(){
@@ -203,6 +210,46 @@ void MultiplicarMatriz(){
     
     //codigo aqui
     
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
+}
+
+void randomizar(){
+    int opcion;
+    string input;
+    cout<<"Cuantos generar?"<<endl;
+    cout<<"1. 50 datos"<<endl;
+    cout<<"2. 250 datos"<<endl;
+    cout<<"3. 500 datos"<<endl;
+    cout<<"4. 1000 datos"<<endl;
+    cout<<"5. 5000 datos"<<endl;
+    getline(cin, input);
+    try {
+        opcion = stoi(input);
+    } catch (...){
+        opcion = 0;
+    }
+    clock_t inicio=clock();
+    switch(opcion){
+        case 1:
+            Matrix.generarRandom(50);
+            break;
+        case 2:
+            Matrix.generarRandom(250);
+            break;
+        case 3:
+            Matrix.generarRandom(500);
+            break;
+        case 4:
+            Matrix.generarRandom(1000);
+            break;
+        case 5:
+            Matrix.generarRandom(5000);
+            break;
+        default:
+            cout<<"Opcion no valida"<<endl;
+    }
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
