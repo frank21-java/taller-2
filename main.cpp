@@ -199,9 +199,9 @@ void DensidadMatriz(){
     //codigo aqui
     
     clock_t fin=clock();
-    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
-    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
+    std::cout<< "Dencidad de la matriz: "<< Matrix.density()<<std::endl;
 }
+
 void MultiplicarMatriz(){
         clock_t inicio=clock();
     
