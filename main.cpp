@@ -69,7 +69,6 @@ void menuPrincipal(){
     cout << "5: Densidad de la matriz" << endl;
     cout << "6: Multiplicar matriz"<< endl;
     cout << "7: Salir"<< endl;
-    cout<<"8: Generar cantidad de aleatorios"<<endl;
     cout << "Seleccione: ";
 }
 void AgregarDato(){
@@ -109,8 +108,7 @@ void AgregarDato(){
         value = 0;
     }
     if(value == 0){
-        cout<<"Opcion invalida"<<endl;
-        return;
+        cout<<"Opcion invalida, se converitra en 0 automaticamente"<<endl;
     }
     
     Matrix.add(X,Y,value);
