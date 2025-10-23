@@ -69,7 +69,7 @@ int SparseMatrix::remover(int fila,int columna){
     } else {
         anterior->next = actual->next;
     }
-    delete actual;
+    actual->valor = 0;
     return 1;
 }
 
@@ -151,4 +151,5 @@ void SparseMatrix::generarRandom(int cant){
             listos++;
         }
     }
+
 }
