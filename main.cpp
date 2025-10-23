@@ -206,8 +206,8 @@ void DensidadMatriz(){
 
 void MultiplicarMatriz(){
     clock_t inicio=clock();
-    
-    //codigo aqui
+    cout<<"No se dieron indicaciones de donde sacar la segunda matriz, dentro del archivo SparseMatrix.cpp puede ver como iba a funcionar"<<endl;
+    //Matrix.multiply(otraMatriz);
     
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
