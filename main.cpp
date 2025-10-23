@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SparseMatrix.h"
+#include <ctime>
 using namespace std;
 
 SparseMatrix Matrix;
