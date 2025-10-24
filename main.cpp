@@ -76,7 +76,6 @@ void AgregarDato(){
     clock_t inicio=clock();
     int X;
     int Y;
-    int value;
     string input;
     cout << "----------------------" << endl;
     cout << "Ingrese Coredenada X" << endl;
@@ -101,18 +100,32 @@ void AgregarDato(){
         cout<<"Opcion invalida"<<endl;
         return;
     }
-    cout << "Ingrese Valor a insertar: " << endl; 
-    getline(cin, input);
-    try {
-        value = stoi(input);
-    } catch (...){
-        value = 0;
+    if (X <= 0 || Y <= 0) {
+        cout << "Tamaño inválido de matriz.\n";
+        return;
     }
-    if(value == 0){
-        cout<<"Opcion invalida, se converitra en 0 automaticamente"<<endl;
+
+    cout << "\nIngrese los valores de la matriz (" << X << "x" << Y << "):\n"; 
+
+    for(int i = 0; i < X; i++){
+        int posision = i+1;
+        cout << "Fila "<<posision<<": ";
+        string XPos;
+        getline(cin, XPos);
+        for(int j = 0; j < Y; j++){
+            int value = 0;
+            if (j<(int)XPos.size()){
+                string temp(1,XPos[j]);
+                if (temp == ""){
+                    value = 0;
+                } else{
+                    try {value = stoi(temp);} catch (...){value = 0;}
+                }
+            } 
+            Matrix.add(i, j, value);
+        }
     }
-    
-    Matrix.add(X,Y,value);
+    cin.clear();
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
@@ -145,7 +158,7 @@ void ObteneDatoCord(){
         cout<<"Opcion invalida"<<endl;
         return;
     }
-    cout<< "valor: " << Matrix.get(X,Y) << endl;
+    cout<< "valor: " << Matrix.get(X-1,Y-1) << endl;
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
@@ -178,6 +191,8 @@ void RemoverDato(){
         cout<<"Opcion invalida"<<endl;
         return;
     }
+    X--;
+    Y--;
     int a = Matrix.remover(X,Y);
     if (a == 1){
         cout << "Se a eliminado el dato de la cordenada con exito"<<endl;
@@ -198,17 +213,55 @@ void MostrarDatos(){
 }
 void DensidadMatriz(){
     clock_t inicio=clock();
-    std::cout<< "Dencidad de la matriz: "<< Matrix.density()<<"%"<<std::endl;
+    cout<< "Dencidad de la matriz: "<< Matrix.density()<<endl;
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
 
+SparseMatrix LLenarOtraMatriz(){
+    SparseMatrix matriz;
+    int X;
+    int Y;
+    string input;
+    cout << "Ingrese el numero de filas de la matriz:" << endl;
+    getline(cin, input);
+    try {X = stoi(input);} catch (...){X = 0;}
+    cout << "Ingrese el numero de columnas de la matriz:" << endl;
+    getline(cin, input);
+    try {Y = stoi(input);} catch (...){Y = 0;}
+    if(X == 0 || Y == 0){
+        cout<<"Opcion invalida"<<endl;
+        return matriz;
+    }
+    cout << "\nIngrese los valores de la matriz (" << X << "x" << Y << "):\n"; 
+    for(int i = 0; i < X; i++){
+        int posision = i+1;
+        cout << "Fila "<<posision<<": ";
+        string XPos;
+        getline(cin, XPos);
+        for(int j = 0; j < Y; j++){
+            int value = 0;
+            if (j<(int)XPos.size()){
+                string temp(1,XPos[j]);
+                if (temp == ""){
+                    value = 0;
+                } else{
+                    try {value = stoi(temp);} catch (...){value = 0;}
+                }
+            } 
+            matriz.add(i, j, value);
+        }
+    }
+    return matriz;
+}
 void MultiplicarMatriz(){
     clock_t inicio=clock();
-    cout<<"No se dieron indicaciones de donde sacar la segunda matriz, dentro del archivo SparseMatrix.cpp puede ver como iba a funcionar"<<endl;
-    //Matrix.multiply(otraMatriz);
-    
+    cout<<"Ingrese los datos de la segunda matriz a multiplicar:"<<endl;
+    SparseMatrix B = LLenarOtraMatriz();
+    SparseMatrix C = Matrix.multiply(B);
+    cout<<"Resultado de la multiplicacion:"<<endl;
+    C.printStoredValues();
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
