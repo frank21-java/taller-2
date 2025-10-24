@@ -17,15 +17,17 @@ SparseMatrix::~SparseMatrix(){
 
 void SparseMatrix::add(int fila,int columna,int valor){
     if(valor==0){return;}
-    Node* nuevo = new Node(fila,columna,valor);
-    if(start==nullptr || fila< start->fila || (fila == start->fila && columna< start->columna)){
+    Node* nuevo = new Node(fila, columna, valor);
+
+    if (start == nullptr || fila < start->fila ||(fila == start->fila && columna < start->columna)) {
         nuevo->next = start;
-        start=nuevo;
+        start = nuevo;
         return;
     }
-    Node* actual=start;
-    while(actual->next!=nullptr&&(actual->next->fila<fila||(actual->next->fila==fila&&actual->next->columna<columna))){
-        actual=actual->next;
+    
+    Node* actual = start;
+    while (actual->next != nullptr && (actual->next->fila < fila || (actual->next->fila == fila && actual->next->columna < columna))) {
+        actual = actual->next;
     }
     nuevo->next = actual->next;
     actual->next = nuevo;
@@ -45,7 +47,7 @@ int SparseMatrix::get(int fila,int columna){
 void SparseMatrix::printStoredValues(){
     Node* actual = start;
     while (actual != nullptr) {
-        cout << "(" << actual->fila << ", " << actual->columna << ") --> " << actual->valor << endl;
+        cout << "(" << (actual->fila + 1) << ", " << (actual->columna + 1) << ") --> " << actual->valor << endl;
         actual = actual->next;
     }
 }
@@ -73,19 +75,21 @@ int SparseMatrix::remover(int fila,int columna){
     return 1;
 }
 
-int SparseMatrix::density(){
-    if(start==nullptr){return 0;}
-    int cantidad=0;
-    int filas=obtenerFilas();
-    int columnas=obtenerColumnas();
-    Node* actual=start;
-    while(actual!=nullptr){
+double SparseMatrix::density(){
+    int filas = obtenerFilas();
+    int columnas = obtenerColumnas();
+    int cantidad = 0;
+    Node* actual = start;
+    while(actual != nullptr){
         cantidad++;
-        actual=actual->next;
+        actual = actual->next;
     }
-    int total=filas*columnas;
-    double resultado = (double)cantidad/total;
-    return resultado*100;
+
+    int total = filas * columnas;
+    double resultado = static_cast<double>(cantidad) / total;
+
+    cout << "Densidad: " << resultado << endl;
+    return resultado;
 }
 
 int SparseMatrix::obtenerFilas(){
@@ -95,7 +99,7 @@ int SparseMatrix::obtenerFilas(){
         filas=max(filas,actual->fila);
         actual=actual->next;
     }
-    return filas;
+    return filas+1;
 }
 int SparseMatrix::obtenerColumnas(){
     int columnas=0;
@@ -104,29 +108,45 @@ int SparseMatrix::obtenerColumnas(){
         columnas=max(columnas,actual->columna);
         actual=actual->next;
     }
-    return columnas;
+    return columnas +1;
 
 }
 
-SparseMatrix* SparseMatrix::multiply(SparseMatrix* second){
-    if(obtenerColumnas()==second->obtenerFilas()){
-        SparseMatrix* matriz=new SparseMatrix();
-        Node* actual=start;
-        while(actual!=nullptr){
-            Node* multi=second->start;
-            while(multi!=nullptr){
-                if(actual->fila==multi->columna){
-                    int agregar=get(actual->fila,actual->columna) * second->get(multi->fila,multi->columna);
-                    matriz->add(actual->fila,multi->columna,agregar);
-                }
-                multi=multi->next;
-            }
-            actual=actual->next;
-        }
-        return matriz;
+
+
+
+SparseMatrix SparseMatrix::multiply(SparseMatrix &second){
+    int filas1 = obtenerFilas();
+    int columnas1 = obtenerColumnas();
+    int filas2 = second.obtenerFilas();
+    int columnas2 = second.obtenerColumnas();
+
+    SparseMatrix C;
+    if(columnas2 != filas2){
+        cout<<"No se pueden multiplicar las matrices"<<endl;
+        return C;
     }
-    return nullptr;
+    for (int i = 0; i < filas1; i++){
+        for(int j = 0; j < columnas2; j++){
+            int suma = 0;
+            for(int k = 0; k < columnas1; k++){
+                int val1 = get(i, k);
+                int val2 = second.get(k, j);
+                if(val1 != 0 && val2 != 0){
+                    suma += val1 * val2;
+                }                
+            }
+            if(suma != 0){
+                C.add(i, j, suma);
+            }
+        }
+    }
+    
+    return C;
+    
 }
+
+
 
 bool SparseMatrix::existe(int fila,int columna){
     Node* actual=start;
