@@ -1,9 +1,9 @@
 #pragma once
-
-class Node{
-    public:
-    int fila,columna,valor;
+struct Node {
+    int fila;
+    int columna;
+    int valor;
     Node* next;
-    Node(int fila,int columna,int valor);
-    ~Node();
+
+    Node(int f, int c, int v);
 };
