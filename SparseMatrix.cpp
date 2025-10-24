@@ -1,6 +1,7 @@
 #include "SparseMatrix.h"
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 using namespace std;
 
 SparseMatrix::SparseMatrix(){
@@ -87,8 +88,6 @@ double SparseMatrix::density(){
 
     int total = filas * columnas;
     double resultado = static_cast<double>(cantidad) / total;
-
-    cout << "Densidad: " << resultado << endl;
     return resultado;
 }
 
@@ -159,17 +158,14 @@ bool SparseMatrix::existe(int fila,int columna){
     return false;
 }
 
-void SparseMatrix::generarRandom(int cant){
-    int listos=0;
-    int fila;
-    int columna;
-    while(listos<cant){
-        fila=rand();
-        columna=rand();
-        if(existe(fila,columna)==false){
-            add(fila,columna,rand());
-            listos++;
+void SparseMatrix::generarRandom(int filas,int columnas){
+    srand(time(nullptr));
+    for (int i = 0;i< filas; i++){
+        for(int j = 0; j < columnas; j++){
+            int value = rand() % 10; 
+            if(value != 0){
+                add(i, j, value);
+            }
         }
     }
-
 }
