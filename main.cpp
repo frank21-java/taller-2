@@ -14,7 +14,7 @@ void MostrarDatos();
 void DensidadMatriz();
 void MultiplicarMatriz();
 void randomizar();
-
+void MultiplicarMatrizrandom();
 
 int main()
 {   
@@ -48,16 +48,20 @@ int main()
             case 6 :
                 MultiplicarMatriz();
                 break;
+            
             case 7 :
-                cout<<"hasta luego"<<endl;
+                MultiplicarMatrizrandom();
                 break;
             case 8:
                 randomizar();
                 break;
+            case 9 :
+                cout<<"hasta luego"<<endl;
+                break;
             default:
                 cout << "Esa opcion es invalida"<< endl;
         }
-    } while(opcion !=7);
+    } while(opcion !=9);
     return 0;
 }
 
@@ -69,7 +73,9 @@ void menuPrincipal(){
     cout << "4: Mostrar los datos" << endl;
     cout << "5: Densidad de la matriz" << endl;
     cout << "6: Multiplicar matriz"<< endl;
-    cout << "7: Salir"<< endl;
+    cout << "7: Multpiplicar matriz alatoriamente"<< endl;
+    cout << "8: Generar datos aleatorios"<< endl;
+    cout << "9: Salir"<< endl;
     cout << "Seleccione: ";
 }
 void AgregarDato(){
@@ -219,22 +225,43 @@ void DensidadMatriz(){
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
 
-SparseMatrix LLenarOtraMatriz(){
-    SparseMatrix matriz;
+void MultiplicarMatriz(){
+    clock_t inicio=clock();
+    cout<<"ingrese el numero de filas de la segunda matriz:" << endl;
+    SparseMatrix B;
     int X;
     int Y;
     string input;
-    cout << "Ingrese el numero de filas de la matriz:" << endl;
+    cout << "----------------------" << endl;
+    cout << "Ingrese Coredenada X" << endl;
     getline(cin, input);
-    try {X = stoi(input);} catch (...){X = 0;}
-    cout << "Ingrese el numero de columnas de la matriz:" << endl;
-    getline(cin, input);
-    try {Y = stoi(input);} catch (...){Y = 0;}
-    if(X == 0 || Y == 0){
-        cout<<"Opcion invalida"<<endl;
-        return matriz;
+    try {
+        X = stoi(input);
+    } catch (...){
+        X = 0;
     }
+    if(X == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    cout << "Ingrese Cordenada Y" << endl;
+    getline(cin, input);
+    try {
+        Y = stoi(input);
+    } catch (...){
+        Y = 0;
+    }
+    if(Y == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
+    }
+    if (X <= 0 || Y <= 0) {
+        cout << "Tamaño inválido de matriz.\n";
+        return;
+    }
+
     cout << "\nIngrese los valores de la matriz (" << X << "x" << Y << "):\n"; 
+
     for(int i = 0; i < X; i++){
         int posision = i+1;
         cout << "Fila "<<posision<<": ";
@@ -250,15 +277,10 @@ SparseMatrix LLenarOtraMatriz(){
                     try {value = stoi(temp);} catch (...){value = 0;}
                 }
             } 
-            matriz.add(i, j, value);
+            B.add(i, j, value);
         }
     }
-    return matriz;
-}
-void MultiplicarMatriz(){
-    clock_t inicio=clock();
-    cout<<"Ingrese los datos de la segunda matriz a multiplicar:"<<endl;
-    SparseMatrix B = LLenarOtraMatriz();
+    cin.clear();
     SparseMatrix C = Matrix.multiply(B);
     cout<<"Resultado de la multiplicacion:"<<endl;
     C.printStoredValues();
@@ -266,42 +288,44 @@ void MultiplicarMatriz(){
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
 }
-
-void randomizar(){
-    int opcion;
+void MultiplicarMatrizrandom(){
+    SparseMatrix B ;
     string input;
-    cout<<"Cuantos generar?"<<endl;
-    cout<<"1. 50 datos"<<endl;
-    cout<<"2. 250 datos"<<endl;
-    cout<<"3. 500 datos"<<endl;
-    cout<<"4. 1000 datos"<<endl;
-    cout<<"5. 5000 datos"<<endl;
+    int filasb;
+    int columnasb;
+    cout << "Ingrese el numero de filas de la segunda matriz:" << endl;
     getline(cin, input);
-    try {
-        opcion = stoi(input);
-    } catch (...){
-        opcion = 0;
-    }
+    try {filasb = stoi(input);} catch (...){filasb = 0;}
+    cout << "Ingrese el numero de columnas de la segunda matriz:" << endl;
+    getline(cin, input);
+    try {columnasb = stoi(input);} catch (...){columnasb = 0;}
     clock_t inicio=clock();
-    switch(opcion){
-        case 1:
-            Matrix.generarRandom(50);
-            break;
-        case 2:
-            Matrix.generarRandom(250);
-            break;
-        case 3:
-            Matrix.generarRandom(500);
-            break;
-        case 4:
-            Matrix.generarRandom(1000);
-            break;
-        case 5:
-            Matrix.generarRandom(5000);
-            break;
-        default:
-            cout<<"Opcion no valida"<<endl;
+    B.generarRandom(filasb,columnasb);
+    SparseMatrix C = Matrix.multiply(B);
+    cout<<"Resultado de la multiplicacion:"<<endl;
+    C.printStoredValues();
+    clock_t fin=clock();
+    double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
+    std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
+}
+void randomizar(){
+    string input;
+    int filas;
+    int columnas;
+    cout << "Ingrese el numero de filas de la matriz: " << endl;
+    getline(cin, input);
+    try {filas = stoi(input);} catch (...){filas = 0;}
+    cout << "Ingrese el numero de columnas de la matriz: " << endl;
+    getline(cin, input);
+    try {columnas = stoi(input);} catch (...){columnas = 0;}
+    if(filas == 0 || columnas == 0){
+        cout<<"Opcion invalida"<<endl;
+        return;
     }
+    int total = filas * columnas;
+    cout<< "Se generara una matriz de " << filas << "x" << columnas << " con un total de " << total << " elementos." << endl;
+    clock_t inicio=clock();
+    Matrix.generarRandom(filas,columnas);
     clock_t fin=clock();
     double tiempo=double(fin-inicio)/CLOCKS_PER_SEC;
     std::cout<<"tiempo de ejecucion "<<tiempo<<" segundos"<<std::endl;
