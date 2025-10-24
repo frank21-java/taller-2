@@ -19,5 +19,5 @@ public:
     int obtenerFilas();
     int obtenerColumnas();
     bool existe(int fila,int columna);
-    void generarRandom(int cant);
+    void generarRandom(int filas,int columnas);
 };
